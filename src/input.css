@@ -1,0 +1,153 @@
+@import "tailwindcss";
+
+@source "../public";
+
+/* ── Theme tokens ───────────────────────────────────────────────────── */
+
+/* Candlelit night — default */
+:root {
+  --bg: radial-gradient(ellipse at 50% 38%, #1a1008 0%, #0f0a05 100%);
+  --texture: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='60' height='60'%3E%3Cpath d='M0 0 L60 60 M-30 0 L30 60 M30 0 L90 60' stroke='%23c9a030' stroke-width='0.4' opacity='0.05' fill='none'/%3E%3Cpath d='M0 15 H60 M0 30 H60 M0 45 H60' stroke='%23c9a030' stroke-width='0.35' opacity='0.04' fill='none'/%3E%3C/svg%3E");
+  --vignette-edge: rgba(4,2,0,0.92);
+  --vignette-floor: #030100;
+  --text-result: #f0e8d0;
+  --text-stats: rgba(232,213,163,0.35);
+  --btn-border: rgba(201,160,48,0.25);
+  --btn-border-hover: rgba(201,160,48,0.65);
+  --btn-color: rgba(232,213,163,0.6);
+  --btn-color-active: #e8d5a3;
+  --coin-btn-border: rgba(201,160,48,0.2);
+  --coin-btn-color: rgba(232,213,163,0.45);
+  --coin-btn-active: #e8d5a3;
+}
+
+/* Aged parchment day */
+html[data-theme="light"] {
+  --bg: radial-gradient(ellipse at 50% 38%, #f2ead8 0%, #ede0c4 100%);
+  --texture: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='60' height='60'%3E%3Cpath d='M0 0 L60 60 M-30 0 L30 60 M30 0 L90 60' stroke='%232c1f0e' stroke-width='0.4' opacity='0.09' fill='none'/%3E%3Cpath d='M0 15 H60 M0 30 H60 M0 45 H60' stroke='%232c1f0e' stroke-width='0.35' opacity='0.06' fill='none'/%3E%3C/svg%3E");
+  --vignette-edge: rgba(26,15,5,0.72);
+  --vignette-floor: #1a0f05;
+  --text-result: #2c1f0e;
+  --text-stats: rgba(44,31,14,0.4);
+  --btn-border: rgba(44,31,14,0.22);
+  --btn-border-hover: rgba(44,31,14,0.65);
+  --btn-color: rgba(44,31,14,0.6);
+  --btn-color-active: #1a0d05;
+  --coin-btn-border: rgba(44,31,14,0.18);
+  --coin-btn-color: rgba(44,31,14,0.5);
+  --coin-btn-active: #1a0d05;
+}
+
+/* ── Base ───────────────────────────────────────────────────────────── */
+
+body {
+  @apply overflow-hidden;
+  background: var(--texture), var(--bg);
+}
+
+/* ── Vignette ───────────────────────────────────────────────────────── */
+
+.vignette {
+  @apply absolute inset-0 pointer-events-none;
+  background:
+    radial-gradient(ellipse at 50% 38%, transparent 28%, var(--vignette-edge) 100%),
+    linear-gradient(to top, var(--vignette-floor) 0%, var(--vignette-floor) 14%, transparent 36%);
+  transition: background 0.5s ease;
+}
+
+/* ── Result ─────────────────────────────────────────────────────────── */
+
+#result {
+  font-family: 'Cormorant Garamond', serif;
+  font-style: italic;
+  font-size: 28px;
+  color: var(--text-result);
+  height: 36px;
+  opacity: 0;
+  transform: translateY(8px);
+  transition: opacity 0.4s ease, transform 0.4s ease, color 0.4s ease;
+}
+
+#result.show {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* ── Coin selector ──────────────────────────────────────────────────── */
+
+.coin-btn {
+  @apply bg-transparent rounded-full cursor-pointer;
+  border: 1px solid var(--coin-btn-border);
+  padding: 6px 18px;
+  font-family: 'DM Mono', monospace;
+  font-size: 11px;
+  color: var(--coin-btn-color);
+  transition: all 0.15s ease;
+}
+
+.coin-btn.active {
+  color: var(--coin-btn-active);
+}
+
+/* ── Flip button ────────────────────────────────────────────────────── */
+
+#flip-btn {
+  @apply bg-transparent cursor-pointer;
+  border: 1px solid var(--btn-border);
+  border-radius: 2px;
+  padding: 12px 40px;
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 13px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--btn-color);
+  transition: all 0.2s ease;
+}
+
+#flip-btn:hover:not(:disabled) {
+  border-color: var(--btn-border-hover);
+  color: var(--btn-color-active);
+}
+
+#flip-btn:disabled {
+  @apply opacity-30 cursor-not-allowed pointer-events-none;
+}
+
+/* ── Stats ──────────────────────────────────────────────────────────── */
+
+#stats {
+  font-family: 'DM Mono', monospace;
+  font-size: 11px;
+  color: var(--text-stats);
+  letter-spacing: 0.12em;
+  transition: color 0.4s ease;
+}
+
+/* ── Theme toggle ───────────────────────────────────────────────────── */
+
+#theme-toggle {
+  @apply absolute top-5 right-6 bg-transparent cursor-pointer;
+  border: 1px solid var(--btn-border);
+  border-radius: 2px;
+  padding: 5px 10px;
+  font-family: 'DM Mono', monospace;
+  font-size: 10px;
+  letter-spacing: 0.12em;
+  color: var(--btn-color);
+  z-index: 10;
+  transition: all 0.2s ease;
+}
+
+/* Label driven by CSS so there's no flash on load */
+#theme-toggle::before {
+  content: 'night';
+}
+
+html[data-theme="light"] #theme-toggle::before {
+  content: 'day';
+}
+
+#theme-toggle:hover {
+  border-color: var(--btn-border-hover);
+  color: var(--btn-color-active);
+}

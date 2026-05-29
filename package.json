@@ -1,0 +1,20 @@
+{
+  "name": "coinflip",
+  "version": "1.0.0",
+  "type": "module",
+  "scripts": {
+    "build:css": "tailwindcss -i ./src/input.css -o ./public/css/main.css --minify",
+    "dev:css": "tailwindcss -i ./src/input.css -o ./public/css/main.css --watch",
+    "dev:server": "node --watch server.js",
+    "dev": "concurrently \"npm run dev:css\" \"npm run dev:server\"",
+    "start": "npm run build:css && node server.js"
+  },
+  "dependencies": {
+    "express": "^4.19.0"
+  },
+  "devDependencies": {
+    "@tailwindcss/cli": "^4.3.0",
+    "concurrently": "^9.2.1",
+    "tailwindcss": "^4.3.0"
+  }
+}

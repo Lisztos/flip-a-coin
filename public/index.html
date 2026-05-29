@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Coin Flip</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;1,400&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <script>
+    (function () {
+      const saved = localStorage.getItem('coin-theme')
+      const systemLight = window.matchMedia('(prefers-color-scheme: light)').matches
+      if (saved === 'light' || (!saved && systemLight)) {
+        document.documentElement.setAttribute('data-theme', 'light')
+      }
+    })()
+  </script>
+  <link rel="stylesheet" href="/css/main.css">
+</head>
+<body>
+  <div id="canvas-container" class="w-screen h-screen relative">
+    <div class="vignette"></div>
+    <button id="theme-toggle" aria-label="Toggle theme"></button>
+    <div id="ui" class="absolute bottom-10 left-1/2 -translate-x-1/2 flex flex-col items-center gap-4">
+      <div id="result"></div>
+      <div class="coin-selector flex gap-2">
+        <button class="coin-btn active" data-coin="mxn">MXN</button>
+        <button class="coin-btn" data-coin="eur">EUR</button>
+        <button class="coin-btn" data-coin="usd">USD</button>
+      </div>
+      <button id="flip-btn">Flip</button>
+      <div id="stats">
+        Heads: <span id="stat-heads">0</span>&nbsp;&nbsp;Tails: <span id="stat-tails">0</span>
+      </div>
+    </div>
+  </div>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+  <script type="module" src="/js/scene.js"></script>
+  <script type="module" src="/js/coin.js"></script>
+  <script type="module" src="/js/animation.js"></script>
+  <script type="module" src="/js/ui.js"></script>
+  <script type="module" src="/js/main.js"></script>
+</body>
+</html>
